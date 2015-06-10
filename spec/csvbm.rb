@@ -60,13 +60,18 @@ puts "podcsv: #{podcsv_read(FILE, nil).size}"
 #puts podcsv_read_n_access_last_0
 
 
-puts "benchmark"
-n = 3
-Benchmark.bm(8) do |x|
-  puts "read:"
+n = 1
+puts ""
+puts "Benchmark"
+puts "read:"
+Benchmark.bmbm(8) do |x|
   x.report('csv') { n.times{ csv_read_0 } }
   x.report('podcsv') { n.times{ podcsv_read_0 } }
-  puts "access:"
+end
+
+puts ""
+puts "access:"
+Benchmark.bmbm(8) do |x|
   x.report('csv') { n.times{ csv_read_n_access_last_0 } }
   x.report('podcsv') { n.times{ podcsv_read_n_access_last_0 } }
 end
