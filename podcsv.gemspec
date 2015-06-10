@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Parse-on-demand CSV.}
   spec.description   = %q{This gem defines PodCSV and PodArray which are available to cache and parse data on-demand. These are useful when you need to read a big CSV file (around thousand records) but use very small part of it.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.homepage      = "https://github.com/mephistobooks/podcsv"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
