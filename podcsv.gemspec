@@ -5,12 +5,12 @@ require 'podcsv/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "podcsv"
-  spec.version       = Podcsv::VERSION
+  spec.version       = PodCSV::VERSION
   spec.authors       = ["YAMAMOTO, Masayuki"]
-  spec.email         = ["martin.route66.blues+atlassian@gmail.com"]
+  spec.email         = ["martin.route66.blues+github@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
+  spec.summary       = %q{Parse-on-demand CSV.}
+  spec.description   = %q{This gem defines PodCSV and PodArray which are available to cache and parse data on-demand. These are useful when you need to read a big CSV file (around thousand records) but use very small part of it.}
   spec.homepage      = "TODO: Put your gem's website or public repo URL here."
   spec.license       = "MIT"
 
