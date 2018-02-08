@@ -77,25 +77,50 @@ class PodArray < Array
       @_cache[args]   # return the value of self[args].
       #self[args]
       #self[args] = @_cache[args]
-    else
+
+    elsif args.is_a?(Range)
       # Range, etc.
       # $stderr.puts "[INFO] access for #{args} (#{args.class})."
 
       # copy partial array.
-      idxs = Array(args)
-      pary = idxs.map{|ii| self[ii]}
+      #idxs = Array(args)
+      #pary = idxs.map{|ii| self[ii]}
+      b = args.begin
+      e = args.end
+      e += self.size if args.max.nil?
+      rr = unless args.exclude_end?
+             b..e
+           else
+             b...e
+           end
+      #$stderr.puts "{#{self.class}##{__method__}} args: #{args} / rr: #{rr}"
+
+      pary = super(args)
       ret = PodArray.new(
         # Integer
         pary
       )
+      # $stderr.puts "{#{self.class}##{__method__}}"+
+      #   " @_cache in ret: #{ret.instance_eval{@_cache}}"+
+      #   " (#{ret.instance_eval{@_cache}.class})}"
 
       # copy partial cache.
-      ini_cache = self._cache
-      idxs.each {|ii|
-        ret.instance_eval{ @_cache[ii] = ini_cache[ii] }
-      }
+      ret.instance_eval{ @_cache = {} }
+      _cache.keys.each do |k|
+        tmp_k = (k>=0)? k : self.size+k
+        val = _cache[k]
+        # $stderr.puts "{#{self.class}##{__method__}}"+
+        #   " k: #{k}, tmp_k: #{tmp_k} val: #{val} (#{_cache[k]})"
+
+        if rr.include? tmp_k
+          new_k = k - b
+          ret.instance_eval{ @_cache[new_k] = val }
+        end
+      end
 
       ret
+    else
+      raise "Not yet implemented for #{args.class}"
     end
   end
 

@@ -31,31 +31,52 @@ describe PodArray do
   describe '#[range] and _cache' do
     it 'can access via basic methods and do cache' do
       pa = PodArray.new( [3,2,4] )
-  
+
       expect(pa._cache).to eq({})
+
+      #
       expect(pa[1]).to eq(2)
       expect(pa.last).to eq(4)
-  
+      expect(pa._cache).to eq({ 1 => 2, 2 => 4, })
+
       expect(pa[1..2]).to eq([2,4])
       expect(pa[1..2].class).to eq(PodArray)
-  
-      expect(pa[0..2]).to eq([3,2,4])
-      expect(pa[1..2].class).to eq(PodArray)
-  
+
+      tmp = pa[0..2]
+      expect(tmp).to eq([3,2,4])
+      expect(tmp.class).to eq(PodArray)
+      expect(tmp._cache).to eq({ 1 => 2, 2 => 4, })
+
       #
-      expect(pa._cache).to eq({ 0 => 3, 1 => 2, 2 => 4, })
-  
       expect(pa.first).to eq(3)
       expect(pa.first.class).to eq(Fixnum)
-  
+
       expect(pa.last).to eq(4)
       expect(pa.last.class).to eq(Fixnum)
-  
+
       expect(pa.index(2)).to eq(4)
       expect(pa.index(2).class).to eq(Fixnum)
-  
+
       expect(pa._cache).to eq({ 0 => 3, 1 => 2, 2 => 4, })
+
+      # mapping between indexes in cache: i.e.,
+      # pa[1] => tmp[0], pa[2] => tmp[1]
+      tmp = pa[1..2]
+      expect(tmp).to eq([2,4])
+      expect(tmp._cache).to eq({ 0 => 2, 1 => 4, })
     end
+
+    it 'can access thru ranges which are bound by minus index' do
+      pa = PodArray.new( [3,2,4] )
+
+      expect(pa._cache).to eq({})
+
+      expect(pa[1..-1]).to eq([2,4])
+      expect(pa[1..-1].class).to eq(PodArray)
+
+      expect(pa._cache).to eq({})
+    end
+
   end
 
   #
@@ -74,7 +95,12 @@ describe PodArray do
       #
       rrg = @pa_1.reverse[0..1]
       expect(rrg.class).to eq(PodArray)
-      expect(rrg).to eq([ ['2','1','3'], ['3','2','4'], ])
+      expect(rrg).to eq([ '2,1,3', '3,2,4', ])
+      expect(rrg._cache).to eq({})
+
+      # access.
+      _ = rrg[0]
+      _ = rrg[1]
       expect(rrg._cache).to eq({0 => ['2','1','3'], 1 => ['3','2','4'], })
     end
   end
