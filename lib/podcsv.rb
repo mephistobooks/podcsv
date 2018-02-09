@@ -96,7 +96,8 @@ class PodArray < Array
       #$stderr.puts "{#{self.class}##{__method__}} args: #{args} / rr: #{rr}"
 
       pary = super(args)
-      ret = PodArray.new(
+      # `self.class` for derived classes.
+      ret = self.class.new(
         # Integer
         pary
       )
@@ -142,7 +143,7 @@ class PodArray < Array
 
   def reverse
     #$stderr.puts "#{self.class}##{__method__} ()"
-    ret = PodArray.new(super)
+    ret = self.class.new(super)
     #$stderr.puts "#{self.class}##{__method__} ret: #{ret.class}"
     #$stderr.puts "#{self.class}##{__method__} ret.first: #{ret.first.class}"
 
@@ -203,7 +204,7 @@ class PodArray < Array
 
     # return
     if block_given?
-      PodArray.new(ret)
+      self.class.new(ret)
     else
       tmp
     end

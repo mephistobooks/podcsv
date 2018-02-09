@@ -1,4 +1,4 @@
-# PodCSV another lazy solution for `csv`
+# PodCSV  - another lazy solution for `csv`
 
 podcsv.gem provides fast access to big CSV file such as several 10 thousand
 records. This introduces two classes: Parse-on-demand CSV and Array (PodCSV,
